@@ -13,7 +13,14 @@ function useSailor() {
         fetchSailor
     }, [])
 
-    return { sailor }
+    // getSailor x prendere i dati di una singola Sailor tramite id
+    const getSailor = async (id) => {
+        const response = await fetch(`http://localhost:3001/sailors/${id}`)
+        const data = await response.json()
+        return data
+    }
+
+    return { sailor, setSailor, getSailor }
 }
 
-export default { useSailor }
+export default { sailor }
