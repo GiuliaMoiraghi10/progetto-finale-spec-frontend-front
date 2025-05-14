@@ -7,7 +7,5 @@ export function useGlobalContext() {
 }
 
 export function GlobalProvider({ children }) {
-    return (
-        <GlobalContext.Provider>{children}</GlobalContext.Provider>
-    )
+    return <GlobalContext.Provider>{children}</GlobalContext.Provider>
 }
