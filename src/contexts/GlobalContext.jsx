@@ -1,19 +1,23 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import useSailor from "../hooks/useSailor";
 
 const GlobalContext = createContext();
 
 export function useGlobalContext() {
-    return useContext(GlobalContext)
+    return useContext(GlobalContext);
 }
 
 export function GlobalProvider({ children }) {
-    // variabile che contiene tutto il return di useSailor()
-    const { sailor, setSailor, getSailor } = useSailor()
+    const { sailor, setSailor, getSailor } = useSailor();
+
+    const [favorites, setFavorites] = useState([])
+    const [showFavorites, setShowFavorites] = useState(false)
 
     return (
-        <GlobalContext.Provider value={{ sailor, setSailor, getSailor }}>
+        <GlobalContext.Provider value={{ sailor, setSailor, getSailor, favorites, setFavorites, showFavorites, setShowFavorites }}>
             {children}
         </GlobalContext.Provider>
-    )
+    );
 }
+
+export { GlobalContext }; 

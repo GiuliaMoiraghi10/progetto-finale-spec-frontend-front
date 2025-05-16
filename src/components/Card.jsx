@@ -10,6 +10,7 @@ export default function Card({ sailor }) {
         navigate(`/sailors/${id}`)
     }
 
+
     return (
         <>
             <div>
