@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
 import { useGlobalContext } from '../contexts/GlobalContext'
+import Card from '../components/Card'
 
 function SailorList() {
 
@@ -10,15 +11,15 @@ function SailorList() {
 
     const filteredSailor = useMemo(() => {
         return [...sailor]
-            .filter((s) => {
-                const query = s.title.toLowerCase().includes(search.toLocaleLowerCase().trim())
-                const category = selectCategory === '' || s.category === selectCategory
+            .filter((sailor) => {
+                const query = sailor.title.toLowerCase().includes(search.toLocaleLowerCase().trim())
+                const category = selectCategory === '' || sailor.category === selectCategory
                 return query && category
             })
             .sort((a, b) => {
                 return a.title.localeCompare(b.title) * sortOrder
             })
-    }, [search, sailor, selectCategory])
+    }, [search, sailor, selectCategory, sortOrder])
 
     console.log(sailor)
 
@@ -44,10 +45,13 @@ function SailorList() {
                     <option value="Nemico">Nemico</option>
                 </select>
             </div>
-            <button>Ordina per nome</button>
+            <button
+                onClick={() => {
+                    setSortOrder(sortOrder * -1)
+                }}>Ordina per nome</button>
             <div>
-                {filteredSailor.map((s) => (
-                    <div key={s.id}>{s.title}</div>
+                {filteredSailor.map((sailor) => (
+                    <Card key={sailor.id} sailor={sailor} />
                 ))}
             </div>
         </>
