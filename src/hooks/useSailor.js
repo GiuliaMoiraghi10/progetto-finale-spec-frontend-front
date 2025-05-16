@@ -1,6 +1,6 @@
 import { useState, useEffects } from 'react'
 
-export default function useSailor() {
+function useSailor() {
     // stato per le Sailor
     const [sailor, setSailor] = useState([])
 
@@ -21,7 +21,6 @@ export default function useSailor() {
         }, [])
     }
 
-
     // getSailor x prendere i dati di una singola Sailor tramite id
     const getSailor = async (id) => {
         const response = await fetch(`http://localhost:3001/sailors/${id}`)
@@ -29,5 +28,7 @@ export default function useSailor() {
         return data
     }
 
-    return { sailor, setSailor, fetchSailor, getSailor }
+    return { sailor, setSailor, getSailor }
 }
+
+export default useSailor;

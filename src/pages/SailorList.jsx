@@ -1,19 +1,26 @@
-import { useState } from 'react'
-import { GlobalProvider } from '../contexts/GlobalContext'
+import { useState, useMemo } from 'react'
+import { useGlobalContext } from '../contexts/GlobalContext'
 
-export default function SailorList() {
+function SailorList() {
 
-    const { sailor } = GlobalProvider()
+    const { sailor } = useGlobalContext()
     const [search, setSearch] = useState('')
     const [selectCategory, setSelectCategory] = useState('')
+    const [sortOrder, setSortOrder] = useState(1)
 
-    const filteredSailor = () => {
-        return [...sailor].filter((s) => {
-            const query = s.title.toLowerCase().includes(search.toLowerCase().trim())
-            const category = selectCategory === '' || s.category === selectCategory
-            return query && category
-        })
-    }
+    const filteredSailor = useMemo(() => {
+        return [...sailor]
+            .filter((s) => {
+                const query = s.title.toLowerCase().includes(search.toLocaleLowerCase().trim())
+                const category = selectCategory === '' || s.category === selectCategory
+                return query && category
+            })
+            .sort((a, b) => {
+                return a.title.localeCompare(b.title) * sortOrder
+            })
+    }, [search, sailor, selectCategory])
+
+    console.log(sailor)
 
     return (
         <>
@@ -29,19 +36,22 @@ export default function SailorList() {
                     id="category"
                     onChange={(e) => setSelectCategory(e.target.value)}
                 >
-                    <option value="">Inner Senshi</option>
-                    <option value="">Outer Senshi</option>
-                    <option value="">Alleato</option>
-                    <option value="">Starlights</option>
-                    <option value="">Nemico</option>
+                    <option value="">Scegli</option>
+                    <option value="Inner Senshi">Inner Senshi</option>
+                    <option value="Outer Senshi">Outer Senshi</option>
+                    <option value="Alleato">Alleato</option>
+                    <option value="Starlights">Starlights</option>
+                    <option value="Nemico">Nemico</option>
                 </select>
             </div>
             <button>Ordina per nome</button>
             <div>
-                {filteredSailor.map((s) => {
+                {filteredSailor.map((s) => (
                     <div key={s.id}>{s.title}</div>
-                })}
+                ))}
             </div>
         </>
     )
 }
+
+export default SailorList
