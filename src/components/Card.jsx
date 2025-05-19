@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Card({ sailor }) {
     const { id, title, image, category } = sailor
+    const { favorites, setFavorites, sailors } = useGlobalContext()
 
     const navigate = useNavigate()
 
@@ -10,6 +11,13 @@ export default function Card({ sailor }) {
         navigate(`/sailors/${id}`)
     }
 
+    const handleFavorite = (id) => {
+        if (!favorites.some((fav) => fav.id === id)) {
+            setFavorites((prevFav) => [...prevFav, sailor]);
+        } else {
+            setFavorites((prevFav) => prevFav.filter((s) => s.id !== id));
+        }
+    }
 
     return (
         <>
@@ -32,15 +40,17 @@ export default function Card({ sailor }) {
                 <p className="text-sm text-purple-600">{category}</p>
 
                 <div className="flex gap-4 mt-2">
-                    <button className="cursor-pointer bg-pink-200 hover:bg-pink-300 text-red-600 px-3 rounded-full shadow-sm transition text-lg">
-                        ♥︎
+                    <button
+                        className="cursor-pointer bg-pink-200 hover:bg-pink-300 text-red-600 px-3 rounded-full shadow-sm transition text-lg"
+                        onClick={() => handleFavorite(id)}
+                    >
+                        {favorites.some((fav) => fav.id === id) ? "♥︎" : "♡"}
                     </button>
                     <button className="cursor-pointer bg-blue-200 hover:bg-blue-300 text-blue-700 px-3 rounded-full shadow-sm transition text-lg">
                         ⇄
                     </button>
                 </div>
             </div>
-
         </>
     )
 }
