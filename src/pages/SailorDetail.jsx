@@ -29,21 +29,29 @@ export default function SailorDetail() {
 
     return (
         <>
-            <div>
-                <h1>Dettagli Sailor</h1>
-            </div>
-            <div>
-                <h2>{title}</h2>
-                <img src={image} alt="" />
-                <p>{category}</p>
-                <p>{description}</p>
-            </div>
-            <div>
-                <h3>Dettagli aggiuntivi:</h3>
-                <p>Pianeta: {planet ? planet : "Nessun dato"}</p>
-                <p>Sistema Solare: {solarSystem ? solarSystem : "Nessun dato"}</p>
-                <p>Trasformazioni: {transformation !== undefined ? transformation : "Nessun dato"}</p>
-                <p>Armi: {weapons ? weapons : "Nessun dato"}</p>
+            <div className="max-w-4xl mx-auto bg-white/60 backdrop-blur-md border border-pink-200 rounded-3xl p-8 shadow-xl space-y-8 text-purple-800 mt-10">
+                <div className="text-center">
+                    <h1 className="text-4xl font-extrabold text-pink-700 mb-4">Dettagli Sailor</h1>
+                </div>
+
+                <div className="text-center space-y-4">
+                    <h2 className="text-2xl font-bold text-purple-700">{title}</h2>
+                    <img
+                        src={image}
+                        alt={title}
+                        className="mx-auto rounded-xl shadow-md max-h-100 object-cover"
+                    />
+                    <p className="text-sm text-pink-600 italic">{category}</p>
+                    <p className="text-base text-purple-800">{description}</p>
+                </div>
+
+                <div className="bg-pink-100/50 border border-pink-200 rounded-2xl p-6 shadow-inner space-y-3">
+                    <h3 className="text-xl font-semibold text-pink-700">✦ Dettagli aggiuntivi:</h3>
+                    <p><span className="font-semibold text-purple-700">Pianeta:</span> {planet ? planet : "Nessun dato"}</p>
+                    <p><span className="font-semibold text-purple-700">Sistema Solare:</span> {solarSystem ? solarSystem : "Nessun dato"}</p>
+                    <p><span className="font-semibold text-purple-700">Trasformazioni:</span> {transformation !== undefined ? transformation : "Nessun dato"}</p>
+                    <p><span className="font-semibold text-purple-700">Armi:</span> {weapons ? weapons : "Nessun dato"}</p>
+                </div>
             </div>
         </>
     )

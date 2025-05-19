@@ -25,7 +25,7 @@ function SailorList() {
 
     return (
         <>
-            <div className="bg-white/60 backdrop-blur-md border border-pink-200 rounded-3xl p-6 shadow-xl space-y-6 text-center mb-10 max-w-5xl mx-auto">
+            <div className="bg-white/60 backdrop-blur-md border border-pink-200 rounded-3xl p-6 shadow-xl space-y-6 text-center mb-10 max-w-5xl mx-auto mt-10">
                 <h1 className="text-3xl font-bold text-pink-800">Lista Sailor</h1>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

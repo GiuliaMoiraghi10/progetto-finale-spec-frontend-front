@@ -11,7 +11,7 @@ export default function Header() {
     }
 
     return (
-        <header className="bg-pink-100 shadow-lg rounded-b-2xl p-4 flex items-center justify-between flex-col md:flex-row mb-10">
+        <header className="bg-pink-100 shadow-lg rounded-b-2xl p-4 flex items-center justify-between flex-col md:flex-row">
             <Favorites />
 
             <nav className="mt-4 md:mt-0">
