@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 import { useGlobalContext } from "./GlobalContext";
 import useCompare from "../hooks/useCompare";
 
@@ -33,14 +33,29 @@ export function CompareProvider({ children }) {
         }
     };
 
+    // Funzione per chiudere il compare
+    function closeCompare() {
+        setShowCompare(false)
+    }
+
+    // Funzione per aprire il compare
+    function toggleCompare() {
+        showCompare ? setShowCompare(false) : setShowCompare(true)
+    }
+
+    useEffect(() => {
+        sailorsToCompare.length < 1 ? setShowCompare(false) : setShowCompare(true)
+    }, [sailorsToCompare])
+
     return (
         <CompareContext.Provider
             value={{
-                showCompare,
-                setShowCompare,
-                sailorsToCompare,
-                setSailorsToCompare,
                 compareSailors,
+                showCompare,
+                toggleCompare,
+                closeCompare,
+                sailorsToCompare,
+                setSailorsToCompare
             }}
         >
             {children}
