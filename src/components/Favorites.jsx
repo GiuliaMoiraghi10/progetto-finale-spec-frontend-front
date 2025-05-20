@@ -3,6 +3,11 @@ import { useGlobalContext } from "../contexts/GlobalContext";
 export default function Favorites() {
     const { favorites, setFavorites, showFavorites, setShowFavorites } = useGlobalContext()
 
+    // Funzione per rimuovere un personaggio dai preferiti
+    const removeFavorites = (item) => {
+        setFavorites((currFav) => currFav.filter((s) => s.id !== item.id))
+    }
+
     return (
         <div
             className={`z-50 fixed top-0 right-0 w-96 h-full grid grid-rows-[60px_1fr] transition duration-300 ease-in-out
@@ -30,14 +35,16 @@ export default function Favorites() {
                             key={i}
                         >
                             {item.title}
+                            <div>
+                                <button
+                                    className="cursor-pointer self-center mt-6 bg-pink-200 hover:bg-pink-300 text-red-700 font-medium px-5 py-2 rounded-full shadow transition"
+                                    onClick={() => removeFavorites(item)}
+                                >
+                                    Rimuovi dai preferiti
+                                </button>
+                            </div>
                         </li>
                     ))}
-
-                    <button
-                        className="cursor-pointer self-center mt-6 bg-pink-200 hover:bg-pink-300 text-red-700 font-medium px-5 py-2 rounded-full shadow transition"
-                    >
-                        Rimuovi dai preferiti
-                    </button>
                 </ul>
             </div>
         </div>
