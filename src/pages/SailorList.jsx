@@ -26,7 +26,7 @@ function SailorList() {
     return (
         <>
             <div className="bg-white/60 backdrop-blur-md border border-pink-200 rounded-3xl p-6 shadow-xl space-y-6 text-center mb-10 max-w-5xl mx-auto mt-10">
-                <h1 className="text-3xl font-bold text-pink-800">Lista Sailor</h1>
+                <h1 className="text-3xl font-bold text-pink-800">Lista Personaggi</h1>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <input
@@ -43,7 +43,7 @@ function SailorList() {
                         onChange={(e) => setSelectCategory(e.target.value)}
                         className="px-4 py-3 rounded-full border border-purple-200 shadow-sm bg-white text-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-300 w-full sm:w-64"
                     >
-                        <option value="">Scegli</option>
+                        <option value="">Scegli categoria</option>
                         <option value="Inner Senshi">Inner Senshi</option>
                         <option value="Outer Senshi">Outer Senshi</option>
                         <option value="Alleato">Alleato</option>

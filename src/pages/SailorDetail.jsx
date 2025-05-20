@@ -31,7 +31,7 @@ export default function SailorDetail() {
         <>
             <div className="max-w-4xl mx-auto bg-white/60 backdrop-blur-md border border-pink-200 rounded-3xl p-8 shadow-xl space-y-8 text-purple-800 mt-10">
                 <div className="text-center">
-                    <h1 className="text-4xl font-extrabold text-pink-700 mb-4">Dettagli Sailor</h1>
+                    <h1 className="text-4xl font-extrabold text-pink-700 mb-4">Dettagli Personaggio</h1>
                 </div>
 
                 <hr className="my-6 border-t-4 border-pink-300 w-1/2 mx-auto rounded" />
