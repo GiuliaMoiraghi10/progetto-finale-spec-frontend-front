@@ -1,7 +1,7 @@
 export default function HomePage() {
     return (
         <>
-            <div className="p-10 m-10 bg-pink-50 border border-pink-200 rounded-3xl p-4 shadow-md flex flex-col items-center text-center space-y-3 mb-4">
+            <div className="p-10 m-10 bg-pink-50/60 border border-pink-200 rounded-3xl p-4 shadow-md flex flex-col items-center text-center space-y-3 mb-4">
                 <h2 className="text-5xl font-bold text-pink-400">Benvenutə nel mondo di</h2>
                 <h1 className="text-6xl font-bold text-pink-500">Sailor Moon!</h1>
                 <hr className="my-6 border-t-4 border-pink-300 w-1/2 mx-auto rounded" />
