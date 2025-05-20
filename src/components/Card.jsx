@@ -26,15 +26,16 @@ export default function Card({ sailor }) {
                     onClick={() => toDetail(id)}
                     className="cursor-pointer bg-purple-200 hover:bg-purple-300 text-purple-800 px-4 py-2 rounded-full shadow-sm transition"
                 >
-                    ✨ Dettagli
+                    ✨ Scoprimi!
                 </button>
 
                 <h2 className="text-xl font-bold text-pink-800">{title}</h2>
 
                 <img
-                    src={image}
+                    // src="https://i.pinimg.com/736x/1b/31/9c/1b319c8ea4984f7b12626b9e4c274950.jpg"
+                    src="https://i.pinimg.com/736x/37/7c/ef/377cef039cd7c40b597e36c79aaf8a68.jpg"
                     alt=""
-                    className="rounded-xl shadow-md max-h-48 object-cover"
+                    className="rounded-xl shadow-md max-h-48 w-48 object-cover"
                 />
 
                 <p className="text-sm text-purple-600">{category}</p>

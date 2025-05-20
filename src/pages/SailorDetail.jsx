@@ -34,14 +34,16 @@ export default function SailorDetail() {
                     <h1 className="text-4xl font-extrabold text-pink-700 mb-4">Dettagli Sailor</h1>
                 </div>
 
+                <hr className="my-6 border-t-4 border-pink-300 w-1/2 mx-auto rounded" />
+
                 <div className="text-center space-y-4">
-                    <h2 className="text-2xl font-bold text-purple-700">{title}</h2>
+                    <h2 className="text-3xl font-bold text-purple-700">{title}</h2>
                     <img
                         src={image}
                         alt={title}
-                        className="mx-auto rounded-xl shadow-md max-h-100 object-cover"
+                        className="mx-auto rounded-xl shadow-md h-150 object-cover"
                     />
-                    <p className="text-sm text-pink-600 italic">{category}</p>
+                    <p className="text-m text-pink-600 italic">{category}</p>
                     <p className="text-base text-purple-800">{description}</p>
                 </div>
 

@@ -2,4 +2,18 @@
 
 html {
     font-family: "Raleway", sans-serif;
+    height: 100%;
+    min-height: 100vh;
+}
+
+body {
+    /* background: linear-gradient(to right, #662057, #ca6ab5); */
+    background-image: url("https://wallpapers.com/images/hd/sailor-moon-pastel-city-background-kzns45d8rjz6s4pz.jpg");
+    height: 100%;
+    min-height: 100vh;
+}
+
+#root {
+    height: 100%;
+    min-height: 100vh;
 }
