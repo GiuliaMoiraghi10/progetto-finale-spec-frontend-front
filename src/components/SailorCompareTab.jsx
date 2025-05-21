@@ -16,7 +16,10 @@ export default function SailorCompareTab() {
                     Chiudi
                 </button>
                 {sailorsToCompare.length === 0 && (
-                    <div className="text-purple-700">Seleziona due personaggi da confrontare!</div>
+                    <div className="text-purple-700 mt-10">
+                        <strong>Seleziona due personaggi da confrontare!</strong>
+                        <p>Clicca sull'icona ⇄ sotto i personaggi che desideri</p>
+                    </div>
                 )}
                 {sailorsToCompare.map((sailor) => (
                     <SailorCompareCard key={sailor.id} sailor={sailor} />

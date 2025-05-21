@@ -17,7 +17,7 @@ export default function SailorCompareCard({ sailor }) {
             <img
                 src={image}
                 alt={title}
-                className="rounded-xl shadow-md max-h-80 w-48 object-cover"
+                className="rounded-xl shadow-md h-80 w-48 object-cover"
             />
             <p className="text-sm text-purple-600">{category}</p>
             <p className="text-base text-purple-800">{description}</p>

@@ -42,7 +42,7 @@ export default function Header() {
                                     : 'hover:text-pink-500 transition'
                             }
                         >
-                            Sailors
+                            Sailors & Co
                         </NavLink>
                     </li>
                 </ul>
