@@ -34,7 +34,8 @@ export default function Card({ sailor }) {
                 <h2 className="text-xl font-bold text-pink-800">{title}</h2>
 
                 <img
-                    src="https://i.pinimg.com/736x/37/7c/ef/377cef039cd7c40b597e36c79aaf8a68.jpg"
+                    // src="https://i.pinimg.com/736x/37/7c/ef/377cef039cd7c40b597e36c79aaf8a68.jpg"
+                    src={image}
                     alt=""
                     className="rounded-xl shadow-md max-h-48 w-48 object-cover"
                 />

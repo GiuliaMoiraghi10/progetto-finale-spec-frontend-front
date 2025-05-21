@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useGlobalContext } from '../contexts/GlobalContext'
+import { useCompareContext } from '../contexts/CompareContext'
 
 export default function SailorDetail() {
 
     const { id } = useParams()
     const { getSailor } = useGlobalContext()
+    const { favorites, setFavorites } = useGlobalContext();
+    const { compareSailors } = useCompareContext();
     const [sailor, setSailor] = useState()
 
     useEffect(() => {
@@ -19,6 +22,14 @@ export default function SailorDetail() {
         }
         getSailorData()
     }, [])
+
+    const handleFavorite = (id) => {
+        if (!favorites.some((fav) => fav.id === id)) {
+            setFavorites((prevFav) => [...prevFav, sailor]);
+        } else {
+            setFavorites((prevFav) => prevFav.filter((s) => s.id !== id));
+        }
+    };
 
     if (!sailor) {
         return <p>Caricamento...</p>
@@ -53,6 +64,21 @@ export default function SailorDetail() {
                     <p><span className="font-semibold text-purple-700">Sistema Solare:</span> {solarSystem ? solarSystem : "Nessun dato"}</p>
                     <p><span className="font-semibold text-purple-700">Trasformazioni:</span> {transformation !== undefined ? transformation : "Nessun dato"}</p>
                     <p><span className="font-semibold text-purple-700">Armi:</span> {weapons ? weapons : "Nessun dato"}</p>
+                </div>
+
+                <div className="flex gap-4 mt-4 justify-center">
+                    <button
+                        className="cursor-pointer bg-pink-200 hover:bg-pink-300 text-red-600 px-3 rounded-full shadow-sm transition text-lg"
+                        onClick={() => handleFavorite(sailor.id)}
+                    >
+                        {favorites.some((fav) => fav.id === sailor.id) ? "♥︎" : "♡"}
+                    </button>
+                    <button
+                        className="cursor-pointer bg-blue-200 hover:bg-blue-300 text-blue-700 px-3 rounded-full shadow-sm transition text-lg"
+                        onClick={() => compareSailors(sailor.id)}
+                    >
+                        ⇄
+                    </button>
                 </div>
             </div>
         </>

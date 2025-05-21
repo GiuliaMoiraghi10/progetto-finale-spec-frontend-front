@@ -27,7 +27,7 @@ export default function SailorCompareCard({ sailor }) {
                 <p><strong>Trasformazioni:</strong> {transformation}</p>
                 <p><strong>Armi:</strong> {weapons}</p>
             </div>
-            <button onClick={handleRemove} className="mt-2 bg-pink-200 px-3 py-1 rounded-full">
+            <button onClick={handleRemove} className=" cursor-pointer mt-2 bg-pink-200 px-3 py-1 rounded-full">
                 Rimuovi
             </button>
         </div>

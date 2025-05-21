@@ -11,10 +11,10 @@ export default function HomePage() {
                         <strong>✨ Scoprire</strong> i personaggi della serie ✨
                     </li>
                     <li>
-                        <strong>✨ Salvare</strong> i tuoi personaggi preferiti ✨
+                        <strong>✨ Salvare</strong> i tuoi personaggi preferiti <strong>(♡)</strong> ✨
                     </li>
                     <li>
-                        <strong>✨ Confrontare</strong> 2 personaggi tra di loro ✨
+                        <strong>✨ Confrontare</strong> 2 personaggi tra di loro <strong>(⇄)</strong> ✨
                     </li>
                 </ul>
                 <hr className="my-6 border-t-4 border-pink-300 w-1/2 mx-auto rounded" />
