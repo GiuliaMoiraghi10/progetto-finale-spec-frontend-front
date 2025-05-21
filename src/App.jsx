@@ -6,6 +6,7 @@ import SailorList from "./pages/SailorList"
 import SailorDetail from "./pages/SailorDetail"
 import { CompareProvider } from "./contexts/CompareContext"
 
+
 function App() {
 
   return (

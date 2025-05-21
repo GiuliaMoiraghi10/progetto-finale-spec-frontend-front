@@ -1,9 +1,11 @@
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { useNavigate } from "react-router-dom";
+import { useCompareContext } from "../contexts/CompareContext";
 
 export default function Card({ sailor }) {
     const { id, title, image, category } = sailor
     const { favorites, setFavorites, sailors } = useGlobalContext()
+    const { compareSailors } = useCompareContext()
 
     const navigate = useNavigate()
 
@@ -47,7 +49,8 @@ export default function Card({ sailor }) {
                     >
                         {favorites.some((fav) => fav.id === id) ? "♥︎" : "♡"}
                     </button>
-                    <button className="cursor-pointer bg-blue-200 hover:bg-blue-300 text-blue-700 px-3 rounded-full shadow-sm transition text-lg">
+                    <button className="cursor-pointer bg-blue-200 hover:bg-blue-300 text-blue-700 px-3 rounded-full shadow-sm transition text-lg"
+                        onClick={() => compareSailors(id)}>
                         ⇄
                     </button>
                 </div>
