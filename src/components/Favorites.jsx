@@ -31,18 +31,21 @@ export default function Favorites() {
                 <ul className="flex flex-col gap-4 text-purple-800">
                     {favorites.map((item, i) => (
                         <li
-                            className="bg-white/70 border border-pink-200 p-4 rounded-xl shadow hover:bg-pink-50 transition text-center"
+                            className="bg-white/70 border border-pink-200 p-4 rounded-xl shadow hover:bg-pink-50 transition text-center flex flex-col items-center"
                             key={i}
                         >
-                            {item.title}
-                            <div>
-                                <button
-                                    className="cursor-pointer self-center mt-6 bg-pink-200 hover:bg-pink-300 text-red-700 font-medium px-5 py-2 rounded-full shadow transition"
-                                    onClick={() => removeFavorites(item)}
-                                >
-                                    Rimuovi dai preferiti
-                                </button>
-                            </div>
+                            <img
+                                src={item.image}
+                                alt={item.title}
+                                className="w-24 h-30 object-cover rounded-xl mx-auto mb-2 shadow"
+                            />
+                            <div className="font-bold mb-2">{item.title}</div>
+                            <button
+                                className="cursor-pointer self-center mt-2 bg-pink-200 hover:bg-pink-300 text-red-700 font-medium px-5 py-2 rounded-full shadow transition"
+                                onClick={() => removeFavorites(item)}
+                            >
+                                Rimuovi dai preferiti
+                            </button>
                         </li>
                     ))}
                 </ul>
