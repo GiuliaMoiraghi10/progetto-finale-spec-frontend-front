@@ -2,8 +2,14 @@ import { useGlobalContext } from "../contexts/GlobalContext";
 
 export default function Favorites() {
     const { favorites, setFavorites, showFavorites, setShowFavorites } = useGlobalContext()
+    // favorites contiene l'array dei personaggi preferiti
+    // setFavorites è la funzione per aggiornare l'array dei preferiti
+    // showFavorites è un booleano che indica se il pannello dei preferiti è visibile
+    // setShowFavorites è la funzione per aggiornare la visibilità del pannello
 
     // Funzione per rimuovere un personaggio dai preferiti
+    // prende un oggetto item (personaggio) come argomento
+    // e aggiorna lo stato dei preferiti filtrando l'array per rimuovere l'item specifico
     const removeFavorites = (item) => {
         setFavorites((currFav) => currFav.filter((s) => s.id !== item.id))
     }
@@ -37,7 +43,7 @@ export default function Favorites() {
                             <img
                                 src={item.image}
                                 alt={item.title}
-                                className="w-24 h-30 object-cover rounded-xl mx-auto mb-2 shadow"
+                                className="w-24 h-32 object-cover rounded-xl mx-auto mb-2 shadow"
                             />
                             <div className="font-bold mb-2">{item.title}</div>
                             <button

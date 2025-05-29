@@ -1,38 +1,43 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import { useGlobalContext } from '../contexts/GlobalContext'
-import { useCompareContext } from '../contexts/CompareContext'
+import { useParams, useNavigate } from 'react-router-dom' // useparams per ottenere l'id della sailor dall' URL
+import { useGlobalContext } from '../contexts/GlobalContext' // accede ai preferiti e alla funzione per recuperare una sailor
+import { useCompareContext } from '../contexts/CompareContext' // permette di aggiungere una sailor alla lista di confronto
 
 export default function SailorDetail() {
 
-    const { id } = useParams()
-    const { getSailor } = useGlobalContext()
-    const { favorites, setFavorites } = useGlobalContext();
-    const { compareSailors } = useCompareContext();
-    const [sailor, setSailor] = useState()
-    const navigate = useNavigate();
+    const { id } = useParams() // identificativo della sailor dall' URL
+    const { getSailor } = useGlobalContext() // funzione per recuperare dati di una singola sailor
+    const { favorites, setFavorites } = useGlobalContext(); // array dei preferiti e funzione per aggiornarli
+    const { compareSailors } = useCompareContext(); // funzione per gestire il confronto
+    const [sailor, setSailor] = useState() // stato per memorizzare i dati della sailor una volta recuperati
+    const navigate = useNavigate(); // hook per navigare tra le pagine
 
     useEffect(() => {
+        // effettua una chimata asincrona al primo rendering del componente per
+        // recuperare i dati della sailor
         async function getSailorData() {
             try {
                 const data = await getSailor(id)
+                // chiama la funzione getSailor con l'id per ottenere i dati della
+                // singola sailor e li salva nello stato sailor
                 setSailor(data.sailor)
             } catch (error) {
                 console.error("Errore nel recupero dei dati:", error)
             }
         }
-        getSailorData()
+        getSailorData() // chiama la funzione per recuperare i dati della sailor
     }, [])
 
-    const handleFavorite = (id) => {
+    const handleFavorite = (id) => { // se la sailor non è tra i preferiti,la aggiunge, altrimenti la rimuove
         if (!favorites.some((fav) => fav.id === id)) {
-            setFavorites((prevFav) => [...prevFav, sailor]);
+            setFavorites((prevFav) => [...prevFav, sailor]); // 
         } else {
             setFavorites((prevFav) => prevFav.filter((s) => s.id !== id));
         }
     };
 
-    if (!sailor) {
+    if (!sailor) { // se i dati della sailor non sono ancora stati caricati,
+        // mostra un messaggio di caricamento
         return <p>Caricamento...</p>
     }
 

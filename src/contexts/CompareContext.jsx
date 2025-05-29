@@ -2,23 +2,29 @@ import { createContext, useContext, useEffect } from "react";
 import { useGlobalContext } from "./GlobalContext";
 import useCompare from "../hooks/useCompare";
 
-const CompareContext = createContext();
+const CompareContext = createContext(); // crea contesto condiviso per il confronto tra sailor
 
-export function useCompareContext() {
+export function useCompareContext() { // custom hook per accedervi facilmente
     return useContext(CompareContext);
 }
 
 export function CompareProvider({ children }) {
-    const { getSailor } = useGlobalContext();
+    // funzione che fornisce i dati e le funzioni del confronto a tutti i componenti figli
+    const { getSailor } = useGlobalContext(); // recupera funzione per ottenere i dati di una Sailor specifica
     const { showCompare, setShowCompare, sailorsToCompare, setSailorsToCompare } = useCompare();
+    // recupera showCompare con booleano per mostrare/nascondere confronto,
+    // sailorsToCompare con array di Sailor da confrontare
+    // setShowCompare e setSailorsToCompare per aggiornare stati
 
-    // Funzione per ottenere un sailor
+    // Funzione per ottenere una Sailor
     async function getItem(id) {
         const data = await getSailor(id);
         return data.sailor;
     }
 
-    // Funzione per aggiungere/rimuovere sailor dal confronto
+    // Funzione per aggiungere/rimuovere sailor dal confronto.
+    // Se la Sailor non è già presente nell'array sailorsToCompare e l'array ha meno di
+    // 2 elementi, la aggiunge. Altrimenti se la Sailor è già presente, la rimuove dall'array
     const compareSailors = async (id) => {
         if (
             !sailorsToCompare.some((sailor) => sailor.id === id) &&
@@ -43,6 +49,8 @@ export function CompareProvider({ children }) {
         showCompare ? setShowCompare(false) : setShowCompare(true)
     }
 
+    // Effect per aggiornare lo stato showCompare in base alla lunghezza dell'array sailorsToCompare
+    // Se l'array è vuoto, setShowCompare è impostato a false, altrimenti a true
     useEffect(() => {
         sailorsToCompare.length < 1 ? setShowCompare(false) : setShowCompare(true)
     }, [sailorsToCompare])

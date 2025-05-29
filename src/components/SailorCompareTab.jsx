@@ -1,10 +1,11 @@
 import SailorCompareCard from "./SailorCompareCard";
 import { useCompareContext } from "../contexts/CompareContext";
 
-export default function SailorCompareTab() {
+export default function SailorCompareTab() { // Componente che visualizza i personaggi da confrontare solo se showCompare è attivo
+    // Importa il contesto per accedere allo stato di confronto e funzioni correlate
     const { showCompare, sailorsToCompare, closeCompare } = useCompareContext();
 
-    if (!showCompare) return null;
+    if (!showCompare) return null; // se showCompare è false, non renderizza niente
 
     return (
         <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center">

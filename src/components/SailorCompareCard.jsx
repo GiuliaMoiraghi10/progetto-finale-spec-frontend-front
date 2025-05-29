@@ -1,14 +1,19 @@
 import { useCompareContext } from "../contexts/CompareContext";
+// usa il CompareContext per accedere alla funzione setSailorsToCompare, che gestisce
+// l'array dei personaggi attualmente in confronto
 
-export default function SailorCompareCard({ sailor }) {
-    const { setSailorsToCompare } = useCompareContext();
+export default function SailorCompareCard({ sailor }) { // riceve un oggetto sailor come prop, che rappresenta un personaggio da visualizzare nella card
+    const { setSailorsToCompare } = useCompareContext(); // usa setSailorsToCompare per aggiornare l'array dei personaggi a confronto
 
-    if (!sailor) return null;
+    if (!sailor) return null; // se sailor non è definito, non renderizza niente
 
-    const handleRemove = () => {
+    const handleRemove = () => { // funzione per rimuovere il personaggio dalla lista di confronto
+        // quando l'utente clicca sul pulsante "Rimuovi", aggiorna l'array dei personaggi a confronto
+        // filtrando fuori il personaggio corrente (prev)
         setSailorsToCompare((prev) => prev.filter((s) => s.id !== sailor.id));
     };
 
+    // destruttura le proprietà dell'oggetto sailor da visualizzare nella card
     const { title, image, category, description, planet, solarSystem, transformation, weapons } = sailor;
 
     return (
