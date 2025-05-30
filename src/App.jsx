@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage"
 import SailorList from "./pages/SailorList"
 import SailorDetail from "./pages/SailorDetail"
 import { CompareProvider } from "./contexts/CompareContext"
+import NotFound from "./pages/NotFound"
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
                 <Route path="/sailors" element={<SailorList />}></Route>
                 <Route path="/sailors/:id" element={<SailorDetail />}></Route>
               </Route>
+              <Route path="*" element={<NotFound />}></Route>
             </Routes>
           </BrowserRouter>
         </CompareProvider>
