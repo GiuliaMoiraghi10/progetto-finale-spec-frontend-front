@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 // useState per gestire lo stato locale (search, selectCategory, sortorder)
 // useMemo per ottimizzare i calcoli sui dati filtrati e ordinati
 import { useGlobalContext } from '../contexts/GlobalContext'
@@ -11,18 +11,40 @@ function SailorList() { // Pagina SailorList per visualizzare la lista delle Sai
     const [search, setSearch] = useState('') // stato per gestire la ricerca
     const [selectCategory, setSelectCategory] = useState('') // stato per gestire il filtro per categoria
     const [sortOrder, setSortOrder] = useState(1) // stato per gestire l'ordinamento (1 per ascendente, -1 per discendente)
+    const [error, setError] = useState('') // stato per gestire il messaggio di errore
+
+    // Debounce per la ricerca per evitare chiamate frequenti durante la digitazione
+    const [debouncedSearch, setDebouncedSearch] = useState(search)
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedSearch(search)
+        }, 400)
+        return () => clearTimeout(handler)
+    }, [search])
 
     const filteredSailor = useMemo(() => { // useMemo memorizza il risultato della funzione finchè le dipendenze non cambiano
         return [...sailor]
             .filter((sailor) => { // controlla se il nome della Sailor contiene la stringa di ricerca e se appartiene alla categoria selezionata
-                const query = sailor.title.toLowerCase().includes(search.toLocaleLowerCase().trim())
+                const query = sailor.title.toLowerCase().includes(debouncedSearch.toLocaleLowerCase().trim())
                 const category = selectCategory === '' || sailor.category === selectCategory
                 return query && category
             })
             .sort((a, b) => {// prdina le sailor in base al nome, considerando l'ordine di ordinamento
                 return a.title.localeCompare(b.title) * sortOrder
             })
-    }, [search, sailor, selectCategory, sortOrder]) // dipendenze per il calcolo dei dati filtrati e ordinati
+    }, [debouncedSearch, sailor, selectCategory, sortOrder]) // dipendenze per il calcolo dei dati filtrati e ordinati e debouceati
+
+    // Mostra un messaggio di errore se non ci sono risultati
+    // se il debouncedSearch non è vuoto e non ci sono Sailor filtrate, viene mostrato il messaggio di errore
+    // altrimenti il messaggio di errore viene rimosso
+    // useEffect serve per aggiornare il messaggio di errore quando cambiano le dipendenze
+    useEffect(() => {
+        if (debouncedSearch.trim() !== '' && filteredSailor.length === 0) {
+            setError("Nessun personaggio trovato.");
+        } else {
+            setError('');
+        }
+    }, [debouncedSearch, filteredSailor]);
 
     console.log(sailor)
 
@@ -69,6 +91,13 @@ function SailorList() { // Pagina SailorList per visualizzare la lista delle Sai
                     ✦ Ordina per nome
                 </button>
             </div>
+
+            {/* Messaggio di errore se nessun personaggio trovato */}
+            {error && (
+                <div className="text-xl text-white bg-pink-500 p-6 text-center font-semibold mb-4">
+                    {error}
+                </div>
+            )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
                 {filteredSailor.map((sailor) => ( // mappa i dati filtrati e ordinati per creare una Card per ogni Sailor
