@@ -22,12 +22,19 @@ function SailorList() { // Pagina SailorList per visualizzare la lista delle Sai
             .sort((a, b) => {// prdina le sailor in base al nome, considerando l'ordine di ordinamento
                 return a.title.localeCompare(b.title) * sortOrder
             })
-    }, [search, sailor, selectCategory, sortOrder]) // // dipendenze per il calcolo dei dati filtrati e ordinati
+    }, [search, sailor, selectCategory, sortOrder]) // dipendenze per il calcolo dei dati filtrati e ordinati
 
     console.log(sailor)
 
     return (
         <>
+            <figure>
+                <img
+                    src="https://i.pinimg.com/1200x/49/ad/b2/49adb29e32be3829fde828fb6ac85bef.jpg"
+                    alt=""
+                    className="w-full min-h-160 sm:h-80 md:h-96 object-cover mt-8"
+                />
+            </figure>
             <div className="bg-white/60 backdrop-blur-md border border-pink-200 rounded-3xl p-6 shadow-xl space-y-6 text-center mb-10 max-w-5xl mx-auto mt-10">
                 <h1 className="text-3xl font-bold text-pink-800">Lista Personaggi</h1>
 

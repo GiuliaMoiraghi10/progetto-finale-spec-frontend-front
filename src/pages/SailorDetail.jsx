@@ -7,10 +7,13 @@ export default function SailorDetail() {
 
     const { id } = useParams() // identificativo della sailor dall' URL
     const { getSailor } = useGlobalContext() // funzione per recuperare dati di una singola sailor
-    const { favorites, setFavorites } = useGlobalContext(); // array dei preferiti e funzione per aggiornarli
-    const { compareSailors } = useCompareContext(); // funzione per gestire il confronto
+    const { favorites, setFavorites } = useGlobalContext() // array dei preferiti e funzione per aggiornarli
+    const { compareSailors, sailorsToCompare } = useCompareContext() // funzione per gestire il confronto
     const [sailor, setSailor] = useState() // stato per memorizzare i dati della sailor una volta recuperati
-    const navigate = useNavigate(); // hook per navigare tra le pagine
+    const navigate = useNavigate() // hook per navigare tra le pagine
+
+    // Stato per mostrare la modale di avviso
+    const [showMaxCompareModal, setShowMaxCompareModal] = useState(false)
 
     useEffect(() => {
         // effettua una chimata asincrona al primo rendering del componente per
@@ -30,11 +33,21 @@ export default function SailorDetail() {
 
     const handleFavorite = (id) => { // se la sailor non è tra i preferiti,la aggiunge, altrimenti la rimuove
         if (!favorites.some((fav) => fav.id === id)) {
-            setFavorites((prevFav) => [...prevFav, sailor]); // 
+            setFavorites((prevFav) => [...prevFav, sailor])
         } else {
-            setFavorites((prevFav) => prevFav.filter((s) => s.id !== id));
+            setFavorites((prevFav) => prevFav.filter((s) => s.id !== id))
         }
-    };
+    }
+
+    // Gestione click confronto con modale
+    const handleCompareClick = () => { // se ci sono già 2 personaggi in confronto e la sailor non è già tra quelli,
+        // mostra una modale di avviso, altrimenti chiama la funzione per confrontare
+        if (sailorsToCompare.length >= 2 && !sailorsToCompare.some(s => s.id === sailor.id)) {
+            setShowMaxCompareModal(true)
+            return
+        }
+        compareSailors(sailor.id)
+    }
 
     if (!sailor) { // se i dati della sailor non sono ancora stati caricati,
         // mostra un messaggio di caricamento
@@ -46,6 +59,23 @@ export default function SailorDetail() {
 
     return (
         <>
+            {/* Modale di avviso se si stanno già confrontando 2 personaggi */}
+            {showMaxCompareModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+                    <div className="bg-white rounded-3xl p-8 shadow-xl flex flex-col items-center gap-4 max-w-xs">
+                        <div className="text-pink-800 font-bold text-lg text-center">
+                            Stai già confrontando 2 personaggi!
+                        </div>
+                        <button
+                            className=" cursor-pointer mt-2 px-6 py-2 rounded-full bg-pink-200 text-pink-800 font-semibold shadow hover:bg-pink-300 transition"
+                            onClick={() => setShowMaxCompareModal(false)}
+                        >
+                            Ok
+                        </button>
+                    </div>
+                </div>
+            )}
+
             <div className="max-w-4xl mx-auto bg-white/60 backdrop-blur-md border border-pink-200 rounded-3xl p-8 shadow-xl space-y-8 text-purple-800 mt-10">
                 {/* Bottone per tornare alla lista */}
                 <button
@@ -88,7 +118,7 @@ export default function SailorDetail() {
                     </button>
                     <button
                         className="cursor-pointer bg-blue-200 hover:bg-blue-300 text-blue-700 px-3 rounded-full shadow-sm transition text-lg"
-                        onClick={() => compareSailors(sailor.id)}
+                        onClick={handleCompareClick}
                     >
                         ⇄
                     </button>
