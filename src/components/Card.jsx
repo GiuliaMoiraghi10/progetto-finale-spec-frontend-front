@@ -6,6 +6,8 @@ export default function Card({ sailor }) { // Componente Card che rappresenta un
     const { id, title, image, category } = sailor; // destruttura i dati della Sailor per accedere a id, title, image e category
     const { compareSailors, sailorsToCompare } = useCompareContext(); // importa il contesto CompareContext x accedere alla funzione compareSailors
 
+    const isInCompare = sailorsToCompare.some((s) => s.id === sailor.id) // verifica se la Sailor è già tra quelle a confronto
+
     const navigate = useNavigate(); // usa Hook useNavigate x navigare tra le pagine
 
     // Stato per mostrare la modale di avviso
@@ -64,8 +66,13 @@ export default function Card({ sailor }) { // Componente Card che rappresenta un
 
                 <div className="flex gap-4 mt-2">
                     <button
-                        className="cursor-pointer bg-blue-200 hover:bg-blue-300 text-blue-700 px-3 rounded-full shadow-sm transition text-lg"
+                        // il pulsante diventa verde se il personaggio è già stato aggiunto al confronto
+                        className={`cursor-pointer px-3 rounded-full shadow-sm transition text-lg
+                            ${isInCompare
+                                ? "bg-green-300 hover:bg-green-400 text-green-800 font-bold border-2 border-green-500"
+                                : "bg-blue-200 hover:bg-blue-300 text-blue-700"}`}
                         onClick={handleCompareClick}
+                        title={isInCompare ? "Personaggio già in confronto" : "Aggiungi al confronto"}
                     >
                         ⇄
                     </button>

@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useCallback } from 'react'
 // useState per gestire lo stato locale (search, selectCategory, sortorder)
 // useMemo per ottimizzare i calcoli sui dati filtrati e ordinati
 import { useGlobalContext } from '../contexts/GlobalContext'
@@ -15,12 +15,17 @@ function SailorList() { // Pagina SailorList per visualizzare la lista delle Sai
 
     // Debounce per la ricerca per evitare chiamate frequenti durante la digitazione
     const [debouncedSearch, setDebouncedSearch] = useState(search)
+    // Funzione di debounce memorizzata con useCallback
+    const debounceSearch = useCallback((value) => {
+        setDebouncedSearch(value)
+    }, [])
+
     useEffect(() => {
         const handler = setTimeout(() => {
-            setDebouncedSearch(search)
+            debounceSearch(search)
         }, 400)
         return () => clearTimeout(handler)
-    }, [search])
+    }, [search, debounceSearch])
 
     const filteredSailor = useMemo(() => { // useMemo memorizza il risultato della funzione finchè le dipendenze non cambiano
         return [...sailor]
