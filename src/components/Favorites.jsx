@@ -1,7 +1,8 @@
 import { useGlobalContext } from "../contexts/GlobalContext";
+import { Link } from "react-router-dom";
 
 export default function Favorites() {
-    const { favorites, setFavorites, showFavorites, setShowFavorites } = useGlobalContext()
+    const { favorites, setFavorites, showFavorites, setShowFavorites } = useGlobalContext();
     // favorites contiene l'array dei personaggi preferiti
     // setFavorites è la funzione per aggiornare l'array dei preferiti
     // showFavorites è un booleano che indica se il pannello dei preferiti è visibile
@@ -11,8 +12,8 @@ export default function Favorites() {
     // prende un oggetto item (personaggio) come argomento
     // e aggiorna lo stato dei preferiti filtrando l'array per rimuovere l'item specifico
     const removeFavorites = (item) => {
-        setFavorites((currFav) => currFav.filter((s) => s.id !== item.id))
-    }
+        setFavorites((currFav) => currFav.filter((s) => s.id !== item.id));
+    };
 
     return (
         <div
@@ -40,12 +41,19 @@ export default function Favorites() {
                             className="bg-white/70 border border-pink-200 p-4 rounded-xl shadow hover:bg-pink-50 transition text-center flex flex-col items-center"
                             key={i}
                         >
-                            <img
-                                src={item.image}
-                                alt={item.title}
-                                className="w-24 h-32 object-cover rounded-xl mx-auto mb-2 shadow"
-                            />
-                            <div className="font-bold mb-2">{item.title}</div>
+                            <Link
+                                to={`/sailors/${item.id}`}
+                                className="flex flex-col items-center w-full cursor-pointer hover:underline"
+                                onClick={() => setShowFavorites(false)} // chiudi il pannello quando vai al dettaglio
+                                style={{ textDecoration: "none", color: "inherit" }}
+                            >
+                                <img
+                                    src={item.image}
+                                    alt={item.title}
+                                    className="w-24 h-32 object-cover rounded-xl mx-auto mb-2 shadow"
+                                />
+                                <div className="font-bold mb-2">{item.title}</div>
+                            </Link>
                             <button
                                 className="cursor-pointer self-center mt-2 bg-pink-200 hover:bg-pink-300 text-red-700 font-medium px-5 py-2 rounded-full shadow transition"
                                 onClick={() => removeFavorites(item)}
@@ -57,6 +65,5 @@ export default function Favorites() {
                 </ul>
             </div>
         </div>
-    )
-
+    );
 }

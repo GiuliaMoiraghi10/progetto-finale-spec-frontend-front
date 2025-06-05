@@ -1,57 +1,56 @@
-import { useState, useMemo, useEffect, useCallback } from 'react'
+import { useState, useMemo, useCallback, useEffect } from 'react'
 // useState per gestire lo stato locale (search, selectCategory, sortorder)
 // useMemo per ottimizzare i calcoli sui dati filtrati e ordinati
 import { useGlobalContext } from '../contexts/GlobalContext'
 // useGlobalContext per accedere al contesto globale che contiene i dati delle Sailor
 import Card from '../components/Card'
 
+// Funzione di debounce generica
+const debounce = (callback, delay) => { // callback function che è la funzione che voglio debounceare e delay è il tempo di attesa
+    let timer; // qui salvo il timer - scope closure
+    return (value) => { // ritorna la funzione debounceata che accetta un valore
+        clearTimeout(timer) // pulissco il timeout del timer precedente
+        timer = setTimeout(() => { // salvo dentro al timer un nuovo timeout
+            callback(value) // richiamo la callback passata come argomento con il valore passato
+        }, delay)
+    }
+}
+
 function SailorList() { // Pagina SailorList per visualizzare la lista delle Sailor 
 
-    const { sailor } = useGlobalContext() // recupero i dati delle Sailor dal contesto globale
-    const [search, setSearch] = useState('') // stato per gestire la ricerca
-    const [selectCategory, setSelectCategory] = useState('') // stato per gestire il filtro per categoria
-    const [sortOrder, setSortOrder] = useState(1) // stato per gestire l'ordinamento (1 per ascendente, -1 per discendente)
-    const [error, setError] = useState('') // stato per gestire il messaggio di errore
+    const { sailor } = useGlobalContext()
 
-    // Debounce per la ricerca per evitare chiamate frequenti durante la digitazione
-    const [debouncedSearch, setDebouncedSearch] = useState(search)
-    // Funzione di debounce memorizzata con useCallback
-    const debounceSearch = useCallback((value) => {
-        setDebouncedSearch(value)
-    }, [])
+    const [search, setSearch] = useState('')
+    const [selectCategory, setSelectCategory] = useState('')
+    const [sortOrder, setSortOrder] = useState(1)
 
-    useEffect(() => {
-        const handler = setTimeout(() => {
-            debounceSearch(search)
-        }, 400)
-        return () => clearTimeout(handler)
-    }, [search, debounceSearch])
+    const [error, setError] = useState('')
 
-    const filteredSailor = useMemo(() => { // useMemo memorizza il risultato della funzione finchè le dipendenze non cambiano
+    const debouncedSearch = useCallback(
+        debounce(setSearch, 500)
+        , [])
+
+
+    const filteredSailor = useMemo(() => {
         return [...sailor]
-            .filter((sailor) => { // controlla se il nome della Sailor contiene la stringa di ricerca e se appartiene alla categoria selezionata
-                const query = sailor.title.toLowerCase().includes(debouncedSearch.toLocaleLowerCase().trim())
-                const category = selectCategory === '' || sailor.category === selectCategory
+            .filter((s) => {
+                const query = s.title.toLowerCase().includes(search.toLowerCase().trim())
+                const category = selectCategory === '' || s.category === selectCategory
                 return query && category
             })
-            .sort((a, b) => {// prdina le sailor in base al nome, considerando l'ordine di ordinamento
+            .sort((a, b) => {
                 return a.title.localeCompare(b.title) * sortOrder
             })
-    }, [debouncedSearch, sailor, selectCategory, sortOrder]) // dipendenze per il calcolo dei dati filtrati e ordinati e debouceati
+    }, [search, sailor, selectCategory, sortOrder])
 
-    // Mostra un messaggio di errore se non ci sono risultati
-    // se il debouncedSearch non è vuoto e non ci sono Sailor filtrate, viene mostrato il messaggio di errore
-    // altrimenti il messaggio di errore viene rimosso
-    // useEffect serve per aggiornare il messaggio di errore quando cambiano le dipendenze
+
     useEffect(() => {
-        if (debouncedSearch.trim() !== '' && filteredSailor.length === 0) {
-            setError("Nessun personaggio trovato.");
+        if (filteredSailor.length === 0) {
+            setError('Nessun personaggio trovato.');
         } else {
             setError('');
         }
-    }, [debouncedSearch, filteredSailor]);
-
-    console.log(sailor)
+    }, [filteredSailor]);
 
     return (
         <>
@@ -68,8 +67,7 @@ function SailorList() { // Pagina SailorList per visualizzare la lista delle Sai
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                     <input
                         type="text"
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)} // aggiorna lo stato di ricerca con il valore dell'input
+                        onChange={(e) => debouncedSearch(e.target.value)} // aggiorna lo stato di ricerca con il valore dell'input
                         placeholder="Cerca per nome..."
                         className="bg-white px-4 py-2 rounded-full border border-purple-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-300 w-full sm:w-64 text-purple-700"
                     />
@@ -99,7 +97,7 @@ function SailorList() { // Pagina SailorList per visualizzare la lista delle Sai
 
             {/* Messaggio di errore se nessun personaggio trovato */}
             {error && (
-                <div className="text-xl text-white bg-pink-500 p-6 text-center font-semibold mb-4">
+                <div className="text-xl text-white bg-pink-500 p-6 text-center font-semibold mb-100 ">
                     {error}
                 </div>
             )}
